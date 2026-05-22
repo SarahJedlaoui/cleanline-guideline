@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cleanline: Client Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Figtree:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #07090f;
+    --surface: #0d1017;
+    --surface-2: #131820;
+    --surface-3: #1a2130;
+    --border: rgba(255,255,255,0.07);
+    --border-light: rgba(255,255,255,0.12);
+    --accent: #34d399;
+    --accent-dim: rgba(52,211,153,0.08);
+    --accent-border: rgba(52,211,153,0.25);
+    --indigo: #818cf8;
+    --indigo-dim: rgba(129,140,248,0.08);
+    --fuchsia: #f472b6;
+    --fuchsia-dim: rgba(244,114,182,0.08);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.08);
+    --text-primary: rgba(255,255,255,0.92);
+    --text-secondary: rgba(255,255,255,0.55);
+    --text-muted: rgba(255,255,255,0.32);
+    --radius: 10px;
+    --radius-lg: 14px;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'Figtree', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Layout ── */
+  .page { max-width: 860px; margin: 0 auto; padding: 0 32px; }
+
+  /* ── Cover ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -180px; left: -120px;
+    width: 560px; height: 560px;
+    background: radial-gradient(circle, rgba(52,211,153,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .cover-title {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 7vw, 72px);
+    font-weight: 800;
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 24px;
+  }
+  .cover-title span { color: var(--accent); }
+  .cover-sub {
+    font-size: 18px;
+    color: var(--text-secondary);
+    max-width: 520px;
+    line-height: 1.6;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+  .cover-agents {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .agent-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+  .agent-pill.nema { background: var(--accent-dim); border-color: var(--accent-border); color: var(--accent); }
+  .agent-pill.sky { background: var(--indigo-dim); border-color: rgba(129,140,248,0.25); color: var(--indigo); }
+  .agent-pill.sophia { background: var(--fuchsia-dim); border-color: rgba(244,114,182,0.25); color: var(--fuchsia); }
+  .agent-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  /* ── TOC ── */
+  .toc {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .toc-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .toc-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 40px;
+  }
+  .toc-list li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 14px;
+    padding: 6px 0;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s;
+  }
+  .toc-list li a:hover { color: var(--accent); }
+  .toc-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    min-width: 20px;
+  }
+
+  /* ── Sections ── */
+  .section {
+    padding: 72px 0 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .section-title .accent { color: var(--accent); }
+  .section-title .indigo { color: var(--indigo); }
+  .section-title .fuchsia { color: var(--fuchsia); }
+  .section-sub {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 580px;
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+
+  /* ── Steps ── */
+  .steps { display: flex; flex-direction: column; gap: 24px; }
+  .step {
+    display: flex;
+    gap: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    position: relative;
+  }
+  .step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--border-light);
+    background: var(--surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-body { flex: 1; }
+  .step-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .step-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+  .step-text strong { color: rgba(255,255,255,0.8); font-weight: 500; }
+
+  /* ── Screenshot placeholder ── */
+  .screenshot {
+    width: 100%;
+    border-radius: var(--radius);
+    border: 1px dashed rgba(255,255,255,0.15);
+    background: var(--surface-2);
+    padding: 40px 24px;
+    text-align: center;
+    margin: 16px 0;
+  }
+  .screenshot-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .screenshot-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* ── Callout boxes ── */
+  .callout {
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    border: 1px solid;
+  }
+  .callout-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .callout.tip { background: var(--accent-dim); border-color: var(--accent-border); color: rgba(255,255,255,0.8); }
+  .callout.tip .callout-label { color: var(--accent); }
+  .callout.cred { background: rgba(251,191,36,0.06); border-color: rgba(251,191,36,0.2); color: rgba(255,255,255,0.8); }
+  .callout.cred .callout-label { color: var(--amber); }
+  .callout.warning { background: rgba(244,114,182,0.06); border-color: rgba(244,114,182,0.2); color: rgba(255,255,255,0.8); }
+  .callout.warning .callout-label { color: var(--fuchsia); }
+  .callout.info { background: var(--indigo-dim); border-color: rgba(129,140,248,0.2); color: rgba(255,255,255,0.8); }
+  .callout.info .callout-label { color: var(--indigo); }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: var(--surface-3);
+    padding: 2px 7px;
+    border-radius: 4px;
+    color: var(--accent);
+  }
+
+  /* ── Feature grid ── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+  .feature-icon {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .feature-name {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .feature-desc {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  /* ── Chip examples ── */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    border: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+  .chip-label {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+
+  /* ── Agent section ── */
+  .agent-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding: 20px 24px;
+    border-radius: var(--radius-lg);
+    border: 1px solid;
+  }
+  .agent-header.nema { background: var(--accent-dim); border-color: var(--accent-border); }
+  .agent-header.sky { background: var(--indigo-dim); border-color: rgba(129,140,248,0.25); }
+  .agent-header.sophia { background: var(--fuchsia-dim); border-color: rgba(244,114,182,0.25); }
+  .agent-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .agent-avatar.nema { background: rgba(52,211,153,0.15); color: var(--accent); }
+  .agent-avatar.sky { background: rgba(129,140,248,0.15); color: var(--indigo); }
+  .agent-avatar.sophia { background: rgba(244,114,182,0.15); color: var(--fuchsia); }
+  .agent-header-name {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .agent-header-role {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* ── Cred table ── */
+  .cred-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .cred-table td { padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .cred-table td:first-child { color: var(--text-muted); font-family: var(--font-mono); font-size: 11px; width: 140px; }
+  .cred-table td:last-child { color: rgba(255,255,255,0.8); font-family: var(--font-mono); word-break: break-all; }
+  .cred-table tr:last-child td { border-bottom: none; }
+
+  /* ── Divider ── */
+  hr.subtle { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  /* ── Print ── */
+  @media print {
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .cover::before { display: none; }
+    .section { break-inside: avoid; }
+    .step { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ── COVER ── -->
+  <div class="cover" id="top">
+    <div class="cover-eyebrow">CleanLine Client Onboarding Guide · v1.0</div>
+    <h1 class="cover-title">Meet your<br /><span>AI business team.</span></h1>
+    <p class="cover-sub">
+      Cleanline gives your business three specialised AI agents: each trained on your operations, integrated with your tools, and ready to work 24/7.
+    </p>
+    <div class="cover-agents">
+      <span class="agent-pill nema"><span class="agent-dot"></span>Nema · Business Intelligence</span>
+      <span class="agent-pill sky"><span class="agent-dot"></span>Sky · Front Desk Agent</span>
+      <span class="agent-pill sophia"><span class="agent-dot"></span>Sophia · Team Manager</span>
+    </div>
+  </div>
+
+  <!-- ── TOC ── -->
+  <div class="toc">
+    <div class="toc-label">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#start"><span class="toc-num">01</span>Getting started</a></li>
+      <li><a href="#knowledge"><span class="toc-num">02</span>Building your business brain</a></li>
+      <li><a href="#sky"><span class="toc-num">03</span>Sky: Front Desk Agent</a></li>
+      <li><a href="#sophia"><span class="toc-num">04</span>Sophia: Team Manager</a></li>
+      <li><a href="#nema"><span class="toc-num">05</span>Nema: Business Intelligence</a></li>
+      <li><a href="#integrations"><span class="toc-num">06</span>Connecting your tools</a></li>
+      <li><a href="#chat"><span class="toc-num">07</span>What to ask Nema</a></li>
+      <li><a href="#automations"><span class="toc-num">08</span>Automations & smart alerts</a></li>
+      <li><a href="#control"><span class="toc-num">09</span>Control Center</a></li>
+      <li><a href="#pulse"><span class="toc-num">10</span>Business Pulse</a></li>
+    </ul>
+  </div>
+
+  <!-- ── 01 GETTING STARTED ── -->
+  <div class="section" id="start">
+    <div class="section-eyebrow">01 · Getting started</div>
+    <h2 class="section-title">Your account, in <span class="accent">five minutes.</span></h2>
+    <p class="section-sub">
+      Create your account, verify your email, and tell Cleanline about your business. That's it, everything else happens automatically.
+    </p>
+
+    <div class="callout tip">
+      <div class="callout-label">Test account</div>
+      To explore the platform right away, use the test credentials (username: sarahjedlaouii and PW : Sarah123! ), or create your own account and follow these same steps.
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Create your account</div>
+          <div class="step-text">
+            Head to the Cleanline sign-up page. Enter your name, email, and a password. You'll receive a <strong>6-digit verification code</strong> by email, enter it to confirm your account.
+          </div>
+          <img src="screenshots/signup.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+  <img src="screenshots/verification.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Log in and complete your profile</div>
+          <div class="step-text">
+            After verifying, you're taken directly to your <strong>Profile page</strong>. Fill in your business details: business name, Speciality, and anything relevant. The most important field here is your <strong>business website link</strong>: this is what Cleanline uses to learn about your business automatically.
+          </div>
+          <img src="screenshots/profile.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Save your profile and watch the magic happen</div>
+          <div class="step-text">
+            The moment you save, Cleanline begins <strong>reading your entire website</strong> automatically: services, FAQs, pricing, contacts, everything. You'll be redirected to the Agents page. A banner will appear when it's done. This usually takes less than a minute.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 02 BUSINESS KNOWLEDGE ── -->
+  <div class="section" id="knowledge">
+    <div class="section-eyebrow">02 · Business Knowledge</div>
+    <h2 class="section-title">Your business brain: <span class="accent">built automatically.</span></h2>
+    <p class="section-sub">
+      Cleanline creates a structured knowledge base from your website. You can review it, edit it, add documents, and ask questions about it.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Open Business Knowledge</div>
+          <div class="step-text">
+            Once the website scan is complete, a banner appears with two options: <strong>"View Business Knowledge"</strong> or <strong>"Go Live."</strong> Click <em>View Business Knowledge</em> to review what was learned before going live.
+          </div>
+          <img src="screenshots/agents.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+<img src="screenshots/agents2.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Review and edit the Business Wiki</div>
+          <div class="step-text">
+            The <strong>Business Wiki</strong> is a plain-language article about your business: generated from everything Cleanline found on your site. Read through it and make any corrections directly in the editor. Click <strong>Save changes</strong> when you're happy, or <strong>✨ Regenerate</strong> to produce a fresh version.
+          </div>
+          <img src="screenshots/bn1.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+          <div class="callout tip">
+            <div class="callout-label">Tip</div>
+            The wiki is what Sky uses to answer customer calls. The more accurate it is, the better Sky will sound.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Explore the Knowledge Graph</div>
+          <div class="step-text">
+            The <strong>Knowledge Graph</strong> shows all the questions and answers Cleanline extracted from your site, organised by topic. You can add new topics, questions, and answers manually, or type a question in the chat box to query it instantly.
+          </div>
+          <img src="screenshots/bn2.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Add documents (optional)</div>
+          <div class="step-text">
+            Click <strong>Materials</strong> to upload PDFs, menus, price lists, or any document. Cleanline will extract the knowledge from them and add it to the graph automatically, your agents will know that information too.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 03 SKY ── -->
+  <div class="section" id="sky">
+    <div class="section-eyebrow">03 · Agent</div>
+    <h2 class="section-title"><span class="indigo">Sky</span>: your 24/7 front desk.</h2>
+    <p class="section-sub">
+      Sky is a phone receptionist powered by your business knowledge. Customers call a real number and get answered instantly, any time of day.
+    </p>
+
+    <div class="agent-header sky">
+      <div class="agent-avatar sky">S</div>
+      <div>
+        <div class="agent-header-name">Sky · Front Desk Agent</div>
+        <div class="agent-header-role">Answers inbound calls, handles FAQs, books appointments, escalates when needed</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Go Live</div>
+          <div class="step-text">
+            From the Agents page or the post-ingest banner, click <strong>Go Live</strong>. Sky is created immediately and assigned a dedicated phone number. Share this number with your customers, it's their direct line to your business.
+          </div>
+          <img src="screenshots/agents3.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Sky's capabilities out of the box</div>
+          <div class="step-text">
+            Sky can answer any question covered by your business knowledge, handle booking requests, and take messages for your team. Sky never guesses, if it doesn't know something, it takes a message and notifies you.
+          </div>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <div class="feature-icon">📞</div>
+              <div class="feature-name">Call handling</div>
+              <div class="feature-desc">Answers every call with a professional greeting in your brand voice</div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">❓</div>
+              <div class="feature-name">FAQ answering</div>
+              <div class="feature-desc">Answers hours, pricing, services, and anything in your knowledge base</div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">📅</div>
+              <div class="feature-name">Booking requests</div>
+              <div class="feature-desc">Takes appointment requests and feeds them to your Controle Center</div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">📋</div>
+              <div class="feature-name">Message taking</div>
+              <div class="feature-desc">Logs caller intent and details in the Control Center</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Add notes for Sky (time-sensitive info)</div>
+          <div class="step-text">
+            On Sky's agent page, you'll find a <strong>Notes</strong> section. Add a note with a start and end date to give Sky temporary information, for example: <em>"Closed for renovations 9–12 July"</em> or <em>"Special offer on during this week."</em> Sky will reference these notes during that period and ignore them after.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">View call insights</div>
+          <div class="step-text">
+            Sky's page shows a <strong>live insights panel</strong>: what callers are asking about most, call volume over time, and common topics. All individual calls are logged in the Control Center.
+          </div>
+           <img src="screenshots/sky.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 04 SOPHIA ── -->
+  <div class="section" id="sophia">
+    <div class="section-eyebrow">04 · Agent</div>
+    <h2 class="section-title"><span class="fuchsia">Sophia</span>: your team coordinator.</h2>
+    <p class="section-sub">
+      Sophia keeps your team in sync. She sends check-in messages, collects responses, and surfaces a clean summary, so you always know what's happening on the ground.
+    </p>
+
+    <div class="agent-header sophia">
+      <div class="agent-avatar sophia">S</div>
+      <div>
+        <div class="agent-header-name">Sophia · Team Manager</div>
+        <div class="agent-header-role">Check-ins via call, SMS, or WhatsApp · Summaries · Scheduling</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Add Sophia from the Agents page</div>
+          <div class="step-text">
+            On the Agents page, click <strong>Add agents</strong>. In the modal, choose <em>Sophia: Team Manager</em>. She's created instantly with her own phone number.
+          </div>
+           <img src="screenshots/agents4.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+<img src="screenshots/agents5.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Add your team members</div>
+          <div class="step-text">
+            Open Sophia's agent page and click <strong>Add member</strong>. Enter each team member's name and phone number. Sophia will reach out to these people during check-ins.
+          </div>
+          <img src="screenshots/sophia1.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+  <img src="screenshots/sophia2.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Create a check-in</div>
+          <div class="step-text">
+            Click <strong>New check-in</strong> and type what you want Sophia to ask, for example: <em>"Can you confirm delivery was completed today?"</em> or <em>"What's your current workload this afternoon?"</em> Choose a channel (phone call, SMS, or WhatsApp , note use phone for testing ) and either send it now or <strong>schedule it for later</strong>.
+          </div>
+           <img src="screenshots/sophia3.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+          <div class="callout tip">
+            <div class="callout-label">Tip</div>
+            You can also create check-ins by asking Nema on WhatsApp: <em>"Ask the team via WhatsApp if the delivery arrived."</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Review responses and summaries</div>
+          <div class="step-text">
+            Once team members respond, head to the <strong>Check-ins</strong> tab on Sophia's page. You'll see who replied, what they said, and an <strong>AI-generated summary</strong> of all responses, no need to read every message individually.
+          </div>
+          <img src="screenshots/sophia4.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 05 NEMA ── -->
+  <div class="section" id="nema">
+    <div class="section-eyebrow">05 · Agent</div>
+    <h2 class="section-title"><span class="accent">Nema</span>: your business co-pilot.</h2>
+    <p class="section-sub">
+      Nema is your AI business assistant. Talk to it like a colleague, on the web, or on WhatsApp from your phone, and it takes care of the rest.
+    </p>
+
+    <div class="agent-header nema">
+      <div class="agent-avatar nema">N</div>
+      <div>
+        <div class="agent-header-name">Nema · Business Intelligence</div>
+        <div class="agent-header-role">Chat dashboard + personal WhatsApp assistant · Scheduling · Automations</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Add Nema from the Agents page</div>
+          <div class="step-text">
+            Click <strong>Add agents</strong> and choose <em>Nema: Business Intelligence</em>. Two things are created: a <strong>Chat Agent</strong> accessible via the dashboard, and a <strong>WhatsApp Personal Assistant</strong> with its own number.
+          </div>
+           <img src="screenshots/agents6.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Connect Nema on WhatsApp</div>
+          <div class="step-text">
+            On the Agents page, find the WhatsApp row for Nema. You'll see a <strong>key</strong> and a <strong>phone number</strong>. Save that number in your contacts, then send it the following message:
+          </div>
+          <div class="callout cred">
+            <div class="callout-label">WhatsApp connection message</div>
+            Send: <code>connect your-key</code><br />
+            Replace <code>your-key</code> with the key shown on your Agents page.
+          </div>
+          <div class="step-text" style="margin-top: 12px;">
+            Nema will confirm the connection and you're ready to use it from WhatsApp, from anywhere, any time.
+          </div>
+           <img src="screenshots/whatsApp.jpeg"
+     style="width:50%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 06 INTEGRATIONS ── -->
+  <div class="section" id="integrations">
+    <div class="section-eyebrow">06 · Integrations</div>
+    <h2 class="section-title">Connect your <span class="accent">tools.</span></h2>
+    <p class="section-sub">
+      Cleanline connects to the tools you already use. Once connected, Nema can read and act on real data: your actual calendar, inbox, orders, and inventory.
+    </p>
+
+    <div class="callout info">
+      <div class="callout-label">Where to find this</div>
+      Go to the <strong>Agents page → Integrations section</strong>. All connectors are listed there with a Connect button.
+    </div>
+
+    <hr class="subtle" />
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">Gmail</div>
+        <div class="step-body">
+          <div class="step-title">Connect Gmail</div>
+          <div class="step-text">
+            Click <strong>Connect</strong> next to Gmail. You'll be taken to Google's sign-in page. Choose your account. You'll see a warning that says <em>"Google hasn't verified this app."</em>
+          </div>
+          <div class="callout warning">
+            <div class="callout-label">Expected screen: don't be alarmed</div>
+            This appears because we're in the process of completing Google's app review. It's safe to continue. Click <strong>"Advanced settings"</strong> at the bottom left, then click <strong>"Access Nema (unsafe)"</strong>: and the integration will connect successfully.
+          </div>
+          <img src="screenshots/agents7.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">GCal</div>
+        <div class="step-body">
+          <div class="step-title">Connect Google Calendar</div>
+          <div class="step-text">
+            Same flow as Gmail. Click Connect, sign in with your Google account, follow the same <em>Advanced settings</em> step, and your calendar is connected. Nema will be able to check your availability, create bookings, and manage your schedule.
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">Square</div>
+        <div class="step-body">
+          <div class="step-title">Connect Square (test account)</div>
+          <div class="step-text">
+            Click <strong>Connect</strong> next to Square. You'll be redirected to Square's login. Use the test account below to explore inventory and order data:
+          </div>
+          <div class="callout cred">
+            <div class="callout-label">Square test credentials</div>
+            <table class="cred-table">
+              <tr><td>Email</td><td>sarajedlaoui999@gmail.com</td></tr>
+              <tr><td>Password</td><td>bridges206!!!</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">Shopify</div>
+        <div class="step-body">
+          <div class="step-title">Connect Shopify (test store)</div>
+          <div class="step-text">
+            Click <strong>Connect</strong> next to Shopify. When asked for your store URL, enter:
+          </div>
+          <div class="callout cred">
+            <div class="callout-label">Shopify test store</div>
+            <code>nema-dev.myshopify.com</code>
+          </div>
+          <div class="step-text" style="margin-top: 10px;">
+            Follow the on-screen verification steps. Once approved, Cleanline will have access to your product catalogue and order data.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 07 WHAT TO ASK ── -->
+  <div class="section" id="chat">
+    <div class="section-eyebrow">07 · Nema Chat</div>
+    <h2 class="section-title">Just ask. <span class="accent">Nema handles it.</span></h2>
+    <p class="section-sub">
+      No commands to learn. No menus to navigate. Describe what you need in plain language: from the chat dashboard or WhatsApp, and Nema takes action.
+    </p>
+
+    <div class="callout tip">
+      <div class="callout-label">Where to start</div>
+      Open the Nema chat dashboard. You'll see suggestion chips organised by category: tap any to try it instantly, or type your own message.
+    </div>
+
+    <div class="chip-label">📅 Bookings & Calendar</div>
+    <div class="chips">
+      <span class="chip">Check if I'm free tomorrow at 3pm</span>
+      <span class="chip">Book a meeting with Maria at 2pm today</span>
+      <span class="chip">Show me my appointments this week</span>
+      <span class="chip">Cancel my 4pm meeting and email the attendee</span>
+      <span class="chip">Find my first free slot today and book it for Alex</span>
+    </div>
+
+    <div class="chip-label">📦 Inventory & Commerce</div>
+    <div class="chips">
+      <span class="chip">Check inventory for roses</span>
+      <span class="chip">Show me all products below 20 units</span>
+      <span class="chip">List everything that's out of stock</span>
+      <span class="chip">How many orders did we get today?</span>
+      <span class="chip">What did we sell this week?</span>
+    </div>
+
+    <div class="chip-label">✉️ Email</div>
+    <div class="chips">
+      <span class="chip">Send an email to sara@company.com about the weekly report</span>
+      <span class="chip">Search my inbox for messages from the supplier</span>
+      <span class="chip">Read my latest email and reply if it's urgent</span>
+      <span class="chip">Schedule an email to the team at 9am tomorrow</span>
+    </div>
+
+    <div class="chip-label">👥 Team</div>
+    <div class="chips">
+      <span class="chip">Call Sara and ask her to confirm the delivery</span>
+      <span class="chip">Send a WhatsApp to the whole team for status updates</span>
+      <span class="chip">Schedule a check-in with John at 3pm</span>
+    </div>
+
+    <div class="chip-label">📊 Analytics</div>
+    <div class="chips">
+      <span class="chip">How many bookings did we get today?</span>
+      <span class="chip">Show me check-in completion rate this week</span>
+      <span class="chip">What's the call volume this month?</span>
+    </div>
+
+    <img src="screenshots/nema.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+ <img src="screenshots/nema1.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+ <img src="screenshots/nema2.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+
+      <div class="callout tip">
+      <div class="callout-label">Note</div>
+      If something went wrong with the chat just type cancel to cancel the current mission and start again, or just start a new conversation by clicking on <em> "+ New conversation" </em>
+    </div>
+  </div>
+
+  <!-- ── 08 AUTOMATIONS ── -->
+  <div class="section" id="automations">
+    <div class="section-eyebrow">08 · Automations</div>
+    <h2 class="section-title">Set it once. <span class="accent">Let it run.</span></h2>
+    <p class="section-sub">
+      Tell Nema when and how you want things done. Scheduled actions run at a specific time. Conditional automations trigger automatically when something happens in your business.
+    </p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📅</div>
+        <div class="feature-name">Scheduled actions</div>
+        <div class="feature-desc">Run any action at a specific time: once or on a recurring schedule</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-name">Conditional triggers</div>
+        <div class="feature-desc">Fire automatically when a business metric crosses a threshold</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📬</div>
+        <div class="feature-name">Daily recap</div>
+        <div class="feature-desc">Get a morning briefing of bookings, orders, team check-ins, and more</div>
+      </div>
+    </div>
+
+    <div class="chip-label">⚡ Example automations to try</div>
+    <div class="chips">
+      <span class="chip">When I get more than 5 orders today, send me a summary email</span>
+      <span class="chip">Every morning send me a daily business recap</span>
+      <span class="chip">When inventory goes below 5, ask Sara to restock via WhatsApp</span>
+      <span class="chip">Schedule an email to the supplier every Monday at 9am</span>
+      <span class="chip">If inventory drops below 10, email me and call Sara</span>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-label">Works on WhatsApp too</div>
+      You can create and manage automations directly from WhatsApp, just describe what you want. <em>"Every Monday morning, check inventory and email me a report."</em>
+    </div>
+
+    <div class="steps" style="margin-top: 28px;">
+      <div class="step">
+        <div class="step-num">→</div>
+        <div class="step-body">
+          <div class="step-title">Manage your automations</div>
+          <div class="step-text">
+            All active automations live in the <strong>Control Center</strong> under the Missions section. You can see which are pending, edit their conditions or schedule, pause them, or cancel them entirely, without needing to create them again from scratch.
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  <!-- ── 09 CONTROL CENTER ── -->
+  <div class="section" id="control">
+    <div class="section-eyebrow">09 · Control Center</div>
+    <h2 class="section-title">Everything in <span class="accent">one place.</span></h2>
+    <p class="section-sub">
+      The Control Center is your operations hub. Customer call logs, active automations, scheduled missions, and action history, all visible and manageable in one view.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Customer Calls: log of every call Sky handled</div>
+          <div class="step-text">
+            The <strong>Customer Calls</strong> section shows every call Sky answered, with a summary of what the caller wanted. Click any call to see the full transcript and details. If a caller requested a booking or order, you can <strong>mark it as actioned</strong> once you've followed up.
+          </div>
+            <img src="screenshots/cc2.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+  <img src="screenshots/cc3.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Missions: your active automations</div>
+          <div class="step-text">
+            The <strong>Missions</strong> section shows all automations Nema is running for you: scheduled sends, conditional triggers, and recurring daily recaps. Each card shows the next run time and current status. You can <strong>edit</strong> the time or conditions, or <strong>cancel</strong> any mission directly.
+          </div>
+          <img src="screenshots/cc1.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Mission history: full audit trail</div>
+          <div class="step-text">
+            Below active missions you'll find a complete <strong>history</strong> of all past actions Nema has taken. Click any item to see exactly what ran, when, and what the result was: including a link back to the original conversation where it was created.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 10 BUSINESS PULSE ── -->
+  <div class="section" id="pulse">
+    <div class="section-eyebrow">10 · Business Pulse</div>
+    <h2 class="section-title">Your business, <span class="accent">at a glance.</span></h2>
+    <p class="section-sub">
+      The Business Pulse page brings together data from all three agents: bookings, orders, calls, team check-ins, in a single daily snapshot.
+    </p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <div class="feature-name">Daily snapshot</div>
+        <div class="feature-desc">Bookings, orders, revenue, and inventory, updated throughout the day</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <div class="feature-name">Monitoring alerts</div>
+        <div class="feature-desc">See which conditional automations are close to triggering</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📞</div>
+        <div class="feature-name">Sky insights</div>
+        <div class="feature-desc">Call volume and top topics customers are asking about</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">✅</div>
+        <div class="feature-name">Team check-ins</div>
+        <div class="feature-desc">Completion rates and sentiment from Sophia's latest check-ins</div>
+      </div>
+    </div>
+
+   
+
+      <img src="screenshots/bp1.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+   <img src="screenshots/bp2.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+   <img src="screenshots/bp3.png"
+     style="width:100%; border-radius:10px; border:1px solid rgba(255,255,255,0.07); margin:16px 0;" />
+
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div style="padding: 48px 0 64px; text-align: center; border-top: 1px solid var(--border); margin-top: 24px;">
+    <div style="font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--accent); margin-bottom: 12px;">Cleanline</div>
+    <p style="font-size: 13px; color: var(--text-muted); max-width: 420px; margin: 0 auto; line-height: 1.6;">
+      Questions during onboarding? Reach out to your to sarajedlaoui999@gmail.com and we'll walk you through anything step by step.
+    </p>
+    <p style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 24px; letter-spacing: 0.08em;">
+      CONFIDENTIAL · FOR EVALUATION USE ONLY
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
