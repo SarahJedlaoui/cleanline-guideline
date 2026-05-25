@@ -429,6 +429,7 @@
       <li><a href="#automations"><span class="toc-num">08</span>Automations & smart alerts</a></li>
       <li><a href="#control"><span class="toc-num">09</span>Control Center</a></li>
       <li><a href="#pulse"><span class="toc-num">10</span>Business Pulse</a></li>
+      <li><a href="#early-access"><span class="toc-num">11</span>Early Access</a></li>
     </ul>
   </div>
 
@@ -442,7 +443,7 @@
 
     <div class="callout tip">
       <div class="callout-label">Test account</div>
-      To explore the platform right away, use the test credentials (username: sarahjedlaouii and PW : Sarah123! ), or create your own account and follow these same steps.
+      To explore the platform right away, you can request test credentials <a href="#early-access" style="color: var(--accent); text-decoration: none; font-weight: 500;">"Request access"</a>, or create your own account and follow these same steps.
     </div>
 
     <div class="steps">
@@ -821,12 +822,9 @@
           <div class="step-text">
             Click <strong>Connect</strong> next to Square. You'll be redirected to Square's login. Use the test account below to explore inventory and order data:
           </div>
-          <div class="callout cred">
-            <div class="callout-label">Square test credentials</div>
-            <table class="cred-table">
-              <tr><td>Email</td><td>sarajedlaoui999@gmail.com</td></tr>
-              <tr><td>Password</td><td>bridges206!!!</td></tr>
-            </table>
+          <div class="callout info">
+            <div class="callout-label">Access required</div>
+            To connect a Square account, reach out to the Cleanline team, we'll set you up with the right credentials for your environment. <a href="#early-access" style="color: var(--accent); text-decoration: none; font-weight: 500;">Request access →</a>
           </div>
         </div>
       </div>
@@ -838,9 +836,9 @@
           <div class="step-text">
             Click <strong>Connect</strong> next to Shopify. When asked for your store URL, enter:
           </div>
-          <div class="callout cred">
-            <div class="callout-label">Shopify test store</div>
-            <code>nema-dev.myshopify.com</code>
+          <div class="callout info">
+            <div class="callout-label">Access required</div>
+            To access the Shopify test store, reach out to the Cleanline team, we'll set you up with the right credentials for your environment. <a href="#early-access" style="color: var(--accent); text-decoration: none; font-weight: 500;">Request access →</a>
           </div>
           <div class="step-text" style="margin-top: 10px;">
             Follow the on-screen verification steps. Once approved, Cleanline will have access to your product catalogue and order data.
@@ -1065,11 +1063,93 @@
 
   </div>
 
+  <!-- ── 11 EARLY ACCESS ── -->
+  <div class="section" id="early-access">
+    <div class="section-eyebrow">11 · Early Access</div>
+    <h2 class="section-title">Reserve <span class="accent">your spot.</span></h2>
+    <p class="section-sub">
+      Interested in getting Cleanline for your business? Drop your details below and we'll follow up on WhatsApp to get you onboarded.
+    </p>
+
+    <div id="early-access-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px;">
+      <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 24px;">Fill in your details and we'll be in touch to walk you through setup.</p>
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div>
+          <label for="ea-email" style="display: block; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px;">Email address</label>
+          <input id="ea-email" type="email" placeholder="you@example.com"
+            style="width: 100%; background: var(--surface-3); border: 1px solid var(--border-light); border-radius: var(--radius); padding: 10px 14px; color: var(--text-primary); font-family: var(--font-body); font-size: 14px; outline: none;"
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border-light)'" />
+        </div>
+        <div>
+          <label for="ea-website" style="display: block; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px;">Business website URL</label>
+          <input id="ea-website" type="url" placeholder="https://yourbusiness.com"
+            style="width: 100%; background: var(--surface-3); border: 1px solid var(--border-light); border-radius: var(--radius); padding: 10px 14px; color: var(--text-primary); font-family: var(--font-body); font-size: 14px; outline: none;"
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border-light)'" />
+        </div>
+        <div>
+          <label for="ea-phone" style="display: block; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px;">WhatsApp phone number</label>
+          <input id="ea-phone" type="tel" placeholder="+1 234 567 8900"
+            style="width: 100%; background: var(--surface-3); border: 1px solid var(--border-light); border-radius: var(--radius); padding: 10px 14px; color: var(--text-primary); font-family: var(--font-body); font-size: 14px; outline: none;"
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border-light)'" />
+        </div>
+      </div>
+
+      <button onclick="submitEarlyAccess(this)"
+        style="width: 100%; background: var(--accent); color: #07090f; font-family: var(--font-display); font-weight: 700; font-size: 14px; border-radius: var(--radius); padding: 12px; border: none; cursor: pointer; margin-top: 8px;">
+        Request Early Access
+      </button>
+    </div>
+  </div>
+
+  <script>
+  async function submitEarlyAccess(btn) {
+    var email = document.getElementById('ea-email').value.trim();
+    var website = document.getElementById('ea-website').value.trim();
+    var phone = document.getElementById('ea-phone').value.trim();
+
+    var existing = btn.nextElementSibling;
+    if (existing && existing.tagName === 'P') existing.remove();
+
+    if (!email || !website || !phone) {
+      var warn = document.createElement('p');
+      warn.style.cssText = 'margin-top:10px;font-size:12.5px;color:var(--amber);font-family:var(--font-mono);';
+      warn.textContent = 'Please fill in all fields.';
+      btn.insertAdjacentElement('afterend', warn);
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    try {
+      var res = await fetch('https://api.sophia-podcast-be.com/api/early-access', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, website: website, phone: phone })
+      });
+      if (!res.ok) throw new Error('non-ok');
+      document.getElementById('early-access-card').innerHTML =
+        '<div class="callout tip" style="text-align:center; padding: 32px 20px;">' +
+        '<div class="callout-label">You’re on the list</div>' +
+        'We’ll follow up on WhatsApp shortly to get you onboarded.' +
+        '</div>';
+    } catch (e) {
+      btn.disabled = false;
+      btn.textContent = 'Request Early Access';
+      var err = document.createElement('p');
+      err.style.cssText = 'margin-top:10px;font-size:12.5px;color:var(--fuchsia);font-family:var(--font-mono);';
+      err.innerHTML = 'Something went wrong, please try again or email us at <a href="mailto:sarajedlaoui999@gmail.com" style="color:var(--fuchsia);">sarajedlaoui999@gmail.com</a>';
+      btn.insertAdjacentElement('afterend', err);
+    }
+  }
+  </script>
+
   <!-- ── FOOTER ── -->
   <div style="padding: 48px 0 64px; text-align: center; border-top: 1px solid var(--border); margin-top: 24px;">
     <div style="font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--accent); margin-bottom: 12px;">Cleanline</div>
     <p style="font-size: 13px; color: var(--text-muted); max-width: 420px; margin: 0 auto; line-height: 1.6;">
-      Questions during onboarding? Reach out to your to sarajedlaoui999@gmail.com and we'll walk you through anything step by step.
+      Questions during onboarding? Fill out the form above and we'll walk you through anything step by step.
     </p>
     <p style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 24px; letter-spacing: 0.08em;">
       CONFIDENTIAL · FOR EVALUATION USE ONLY
